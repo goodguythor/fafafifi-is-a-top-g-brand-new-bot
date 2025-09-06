@@ -113,7 +113,7 @@ def reply(user):
 
 log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
-log_file = os.path.join(log_dir, "conversation.txt")
+log_file = os.path.join(log_dir, "logs.txt")
 
 with open(log_file, "a", encoding="utf-8") as f:
     while True:
