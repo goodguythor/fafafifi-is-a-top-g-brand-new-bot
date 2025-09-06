@@ -13,79 +13,118 @@ reflections = {
     r"\byours\b": "mine",
 }
 
-def reflect(text):
-    for pat, repl in reflections.items():
-        text = re.sub(pat, repl, text, flags=re.I)
-    return text
+def reflect(words):
+    reflected_words = []
+    for word in words:
+        reflected = word
+        for pat, repl in reflections.items():
+            if re.fullmatch(pat, word, flags=re.I):
+                reflected = re.sub(pat, repl, word, flags=re.I)
+                break
+        reflected_words.append(reflected)
+    return ''.join(reflected_words)
 
 # Bot Correct Response
 patterns = [
     (
-        re.compile(r"\b(workout)\b", re.I),
-        lambda m: "That's cool, is it strength training or cardio?"
+        re.compile(r"\bi( am|(')?(m|ve))?\b.*\b(do(ing)?|done|did)\b.*\b(workout(s)?|working out|exercis(e|ing))\b", re.I),
+        [
+            "That's cool, is it strength training or cardio?",
+            "Nice! Was it a tough session or more of a recovery workout?"
+        ]
     ),
     (
-        re.compile(r"\b(cardio)\b", re.I),
-        lambda m: "That's great, what kind of cardio did you just had?"
+        re.compile(r"\bi( am|(')?(m|ve))?\b.*\b(do(ing)?|done|did)\b.*\bcardio\b", re.I),
+        [
+            "That's great, what kind of cardio did you just have?",
+            "Cardio is awesome for your heart! Was it running, cycling, or something else?"
+        ]
     ),
     (
-        re.compile(r"\b(run)\b", re.I),
-        lambda m: "How long do you run?"
+        re.compile(r"\bi( am|(')?(m|ve))?\b.*\b(do(ing)?|done|did)\b.*\b(ran|run(s|ning)?)\b", re.I),
+        [
+            "How long do you run?",
+            "Running is a great way to clear your mind. Was it outdoors or on a treadmill?"
+        ]
     ),
     (
-        re.compile(r"\b(half\s*)?marathon\b", re.I),
-        lambda m: f"Wow, you just did a {m.group(0).strip()}??? You're an endurance monster."
+        re.compile(r"\bi( am|(')?(m|ve))?\b.*\b(do(ing)?|done|did|ran|run(s|ning)?)\b.*\b(half |full )?marathon\b", re.I),
+        [
+            "Wow, {X}??? You're an endurance monster.",
+            "{X}? That's incredible! How did you feel during the race?"
+        ]
     ),
     (
         re.compile(r"\b(\d+(\.\d+)?)\s*km\b", re.I),
-        lambda m: (
-            f"{m.group(1)} km is a great distance!" if float(m.group(1)) <= 5
-            else f"Wow, you just did a long run of {m.group(1)} km, at what pace do you run?"
-        )
+        [
+            "{X} km is a great distance!",
+            "Wow, you just did a long run of {X} km, at what pace do you run?"
+        ]
     ),
     (
         re.compile(r"\bpace\s*(\d+(\.\d+)?)\b", re.I),
-        lambda m: (
-            "That's a great pace for a beginner, keep up the good work!!!" if float(m.group(1)) > 7
-            else "Wow, you could've been an athlete if you keep doing this consistently." if float(m.group(1)) > 4
-            else "Even the fastest runner in the police academy couldn't even catch u if u ran at this pace"
-        )
+        [
+            "That's a great pace for a beginner, keep up the good work!!!",
+            "Wow, you could've been an athlete if you keep doing this consistently.",
+            "Even the fastest runner in the police academy couldn't even catch u if u ran at this pace"
+        ]
     ),
     (
         re.compile(r"\b(hurt|injur(y|ed|ies))\b", re.I),
-        lambda m: "You need to warm up before doing workout to avoid injury and wear a proper gear. If the injury isn't getting better soon, I suggest you to see a doctor ASAP!"
+        [
+            "You need to warm up before doing workout to avoid injury and wear a proper gear. If the injury isn't getting better soon, I suggest you to see a doctor ASAP!",
+            "Ouch! Make sure to rest and recover. If it hurts a lot, maybe see a doctor."
+        ]
     ),
     (
         re.compile(r"\bstrength\b", re.I),
-        lambda m: "Wow, Ronnie Coleman must be so proud of you! Which body part did you just train?"
+        [
+            "Wow, Ronnie Coleman must be so proud of you! Which body part did you just train?",
+            "Strength training is the key to gains! What exercises did you do today?"
+        ]
     ),
     (
         re.compile(r"\b(((a|A)rm(s)*|(l|L)eg(s)*|(c|C)ore|(b|B)ack)+)\b", re.I),
-        lambda m: f"Yeah Buddy, Your {m.group(1)} must've been stronger rn."
+        [
+            "Yeah Buddy, Your {X} must've been stronger rn.",
+            "Nice! Training your {X} is always a good idea."
+        ]
     ),
     (
         re.compile(r"\bfinish(ed)?\s*workout\b", re.I),
-        lambda m: "Rate the difficulty from 0-10"
+        [
+            "Rate the difficulty from 0-10",
+            "Congrats on finishing your workout! How do you feel now?"
+        ]
     ),
     (
         re.compile(r"\b(\d+(\.\d+)?)\b", re.I),
-        lambda m: (
-            "Lightweight BABY!!!" if float(m.group(1)) < 5
-            else "Good grind!" if float(m.group(1)) < 7
-            else "You're a goddamn hulk!!!"
-        )
+        [
+            "Lightweight BABY!!!",
+            "Good grind!",
+            "You're a goddamn hulk!!!"
+        ]
     ),
     (
         re.compile(r"\b(rest\s*day|resting)\b", re.I),
-        lambda m: "Rest is just as important as training! Enjoy your recovery."
+        [
+            "Rest is just as important as training! Enjoy your recovery.",
+            "Rest days help your muscles grow stronger. Take it easy!"
+        ]
     ),
     (
         re.compile(r"\b(protein|nutrition|diet|eat|food)\b", re.I),
-        lambda m: "Nutrition is key! Are you tracking your macros or just eating intuitively?"
+        [
+            "Nutrition is key! Are you tracking your macros or just eating intuitively?",
+            "Eating well fuels your progress. Got any favorite meals?"
+        ]
     ),
     (
         re.compile(r"\b(motivat(e|ion|ed)|lazy|tired)\b", re.I),
-        lambda m: "Remember, progress is made one step at a time. You got this!"
+        [
+            "Remember, progress is made one step at a time. You got this!",
+            "Everyone feels tired sometimes. Just keep moving forward!"
+        ]
     ),
 ]
 
@@ -104,10 +143,11 @@ defaults = [
 
 # Bot Reply Function
 def reply(user):
-    for pat, response in patterns:
+    for pat, responses in patterns:
         m = pat.match(user)
         if m:
-            return response(m)
+            user_reflected = reflect(user.strip())
+            return random.choice(responses).format(X=user_reflected)
     return random.choice(defaults)
 
 
