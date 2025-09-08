@@ -97,7 +97,7 @@ patterns = [
         ]
     ),
     ( # Pace
-        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(r(u|a)n(s)?|walk(s)?|cycl(e(s)?|ing))\b.*\bpace(s)?\b.*\b(\d+(\.\d+)?)\b", re.I),
+        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(r(u|a)n(s|ning)?|walk(s|ed)?|cycl(e(s)?|ing))\b.*\bpace(s)?\b.*\b(\d+(\.\d+)?)\b", re.I),
         [
             "That's a great pace, keep up the good work!!!",
             "Wow, you could've been an athlete if you keep doing this consistently."
