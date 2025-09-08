@@ -4,16 +4,16 @@ import os
 
 # Pronoun Reflection
 reflections = {
-    r"\bi\b": "you",
+    r"\bi(?:\s+am|(')?(?:m|ve))?\b": "you",
     r"\bme\b": "you",
     r"\bmy\b": "your",
-    r"\bam\b": "are",
-    r"\byou\b": "I",
+    r"\byou\b": "i",
     r"\byour\b": "my",
     r"\byours\b": "mine",
 }
 
-def reflect(words):
+def reflect(sentence):
+    words = sentence.split()
     reflected_words = []
     for word in words:
         reflected = word
@@ -22,108 +22,102 @@ def reflect(words):
                 reflected = re.sub(pat, repl, word, flags=re.I)
                 break
         reflected_words.append(reflected)
-    return ''.join(reflected_words)
+    return ' '.join(reflected_words)
 
 # Bot Correct Response
 patterns = [
-    (
-        re.compile(r"\bi( am|(')?(m|ve))?\b.*\b(do(ing)?|done|did)\b.*\b(workout(s)?|working out|exercis(e|ing))\b", re.I),
+    ( # Banned Words
+        re.compile(r"(fuck?|shit|ass|stupid|bitch|retard)", re.I),
         [
-            "That's cool, is it strength training or cardio?",
-            "Nice! Was it a tough session or more of a recovery workout?"
+            "My mom said that you can't use bad words if you want to go to the heaven 🥺",
+            "Mom, I'm scared 🥺"
+        ]
+    ), 
+    ( # Negation 
+        re.compile(r"\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(not|don(')?t|do not|didn(')?t|did not|ain(')?t)\b", re.I),
+        [
+            "It's ok to not doing anything in a day, just take your time to recover and relax"
         ]
     ),
-    (
-        re.compile(r"\bi( am|(')?(m|ve))?\b.*\b(do(ing)?|done|did)\b.*\bcardio\b", re.I),
+    ( # Great
+        re.compile(r"\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(good|great|happy)\b", re.I),
         [
-            "That's great, what kind of cardio did you just have?",
-            "Cardio is awesome for your heart! Was it running, cycling, or something else?"
+            "That's nice, hope that feelings stay with you for a long time"
         ]
     ),
-    (
-        re.compile(r"\bi( am|(')?(m|ve))?\b.*\b(do(ing)?|done|did)\b.*\b(ran|run(s|ning)?)\b", re.I),
+    ( # Tired
+        re.compile(r"\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(lazy|tired)\b", re.I),
         [
-            "How long do you run?",
-            "Running is a great way to clear your mind. Was it outdoors or on a treadmill?"
+            "Remember, progress is made one step at a time. You got this!",
+            "Everyone feels tired sometimes. Just keep moving forward!"
         ]
     ),
-    (
-        re.compile(r"\bi( am|(')?(m|ve))?\b.*\b(do(ing)?|done|did|ran|run(s|ning)?)\b.*\b(half |full )?marathon\b", re.I),
-        [
-            "Wow, {X}??? You're an endurance monster.",
-            "{X}? That's incredible! How did you feel during the race?"
-        ]
-    ),
-    (
-        re.compile(r"\b(\d+(\.\d+)?)\s*km\b", re.I),
-        [
-            "{X} km is a great distance!",
-            "Wow, you just did a long run of {X} km, at what pace do you run?"
-        ]
-    ),
-    (
-        re.compile(r"\bpace\s*(\d+(\.\d+)?)\b", re.I),
-        [
-            "That's a great pace for a beginner, keep up the good work!!!",
-            "Wow, you could've been an athlete if you keep doing this consistently.",
-            "Even the fastest runner in the police academy couldn't even catch u if u ran at this pace"
-        ]
-    ),
-    (
-        re.compile(r"\b(hurt|injur(y|ed|ies))\b", re.I),
-        [
-            "You need to warm up before doing workout to avoid injury and wear a proper gear. If the injury isn't getting better soon, I suggest you to see a doctor ASAP!",
-            "Ouch! Make sure to rest and recover. If it hurts a lot, maybe see a doctor."
-        ]
-    ),
-    (
-        re.compile(r"\bstrength\b", re.I),
-        [
-            "Wow, Ronnie Coleman must be so proud of you! Which body part did you just train?",
-            "Strength training is the key to gains! What exercises did you do today?"
-        ]
-    ),
-    (
-        re.compile(r"\b(((a|A)rm(s)*|(l|L)eg(s)*|(c|C)ore|(b|B)ack)+)\b", re.I),
-        [
-            "Yeah Buddy, Your {X} must've been stronger rn.",
-            "Nice! Training your {X} is always a good idea."
-        ]
-    ),
-    (
-        re.compile(r"\bfinish(ed)?\s*workout\b", re.I),
-        [
-            "Rate the difficulty from 0-10",
-            "Congrats on finishing your workout! How do you feel now?"
-        ]
-    ),
-    (
-        re.compile(r"\b(\d+(\.\d+)?)\b", re.I),
-        [
-            "Lightweight BABY!!!",
-            "Good grind!",
-            "You're a goddamn hulk!!!"
-        ]
-    ),
-    (
-        re.compile(r"\b(rest\s*day|resting)\b", re.I),
+    ( # Rest
+        re.compile(r"\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\brest(\s*day|ing)?\b", re.I),
         [
             "Rest is just as important as training! Enjoy your recovery.",
             "Rest days help your muscles grow stronger. Take it easy!"
         ]
     ),
-    (
-        re.compile(r"\b(protein|nutrition|diet|eat|food)\b", re.I),
+    ( # Injury
+        re.compile(r"\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(hurt(ing|s)?|injur(y|ed|ies))\b", re.I),
         [
-            "Nutrition is key! Are you tracking your macros or just eating intuitively?",
-            "Eating well fuels your progress. Got any favorite meals?"
+            "You need to warm up before doing workout to avoid injury and wear a proper gear. If the injury isn't getting better soon, I suggest you to see a doctor ASAP!",
+            "Ouch! Make sure to rest and recover. If it hurts a lot, maybe see a doctor."
         ]
     ),
-    (
-        re.compile(r"\b(motivat(e|ion|ed)|lazy|tired)\b", re.I),
+    ( # Strength Training
+        re.compile(r"i(?:\s+am|(')?(?:m|ve))?\b.*\b(train|workout|exercise)(s|ing)?\b\s\bmy\s(streng(th|ht)|muscle)(s)?\b\s*", re.I),
         [
-            "Remember, progress is made one step at a time. You got this!",
-            "Everyone feels tired sometimes. Just keep moving forward!"
+            "Wow, Ronnie Coleman must be so proud of you! Which body part did you just train?",
+            "Strength training is the key to gains! What exercises did you do today?"
+        ]
+    ),
+    ( # Body Part Exercise
+        re.compile(r"i(?:\s+am|(')?(?:m|ve))?\b.*(\b(train|workout|exercise)(s|ing)?\b)\s*\bmy\s(arm|leg|core|back)(s)?\b", re.I),
+        [
+            "Yeah Buddy {X}, You must've been stronger rn.",
+        ]
+    ),
+    ( # Simple Workout
+        re.compile(r"\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(workout(s)?|working out|exercis(e|ing))\b", re.I),
+        [
+            "That's cool, is it strength training or cardio?"
+        ]
+    ),
+    ( # Cardio
+        re.compile(r"\bi(?:\s+am|(')?(?:m|ve))?\b.*\bcardio\b", re.I),
+        [
+            "That's great, what kind of cardio did you just have?",
+            "Cardio is awesome for your heart! Was it running, cycling, or something else?"
+        ]
+    ),
+    ( # Distance
+        re.compile(r"\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(r(u|a)n(s)?|walk(s)?|cycl(e(s)?|ing))\b.*\b(\d+(\.\d+)?)\s*(k(m|ilo(s|\s*meter)?)?|mile(s)?)\b", re.I),
+        [
+            "{X}? That's a great distance!",
+            "Wow, {X}, at what pace do you run?"
+        ]
+    ),
+    ( # Marathon
+        re.compile(r"\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(r(u|a)n(s)?|walk(s)?|cycl(e(s)?|ing))\b.*\b(half|full)?\s*marathon\b", re.I),
+        [
+            "Wow, {X}??? You're an endurance monster.",
+            "{X}? That's incredible! How did you feel during the race?"
+        ]
+    ),
+    ( # Pace
+        re.compile(r"\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(r(u|a)n(s)?|walk(s)?|cycl(e(s)?|ing))\b.*\bpace(s)?\b.*\b(\d+(\.\d+)?)\b", re.I),
+        [
+            "That's a great pace, keep up the good work!!!",
+            "Wow, you could've been an athlete if you keep doing this consistently."
+        ]
+    ),
+    ( # Simple Run
+        re.compile(r"\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(?:ran|run(?:s|ning)?)\b", re.I),
+        [
+            "How long do you run?",
+            "Running is a great way to clear your mind."
         ]
     ),
 ]
