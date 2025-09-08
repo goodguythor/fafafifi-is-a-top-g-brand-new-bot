@@ -23,7 +23,7 @@ def reflect(sentence):
 # Bot Correct Response
 patterns = [
     ( # Banned Words
-        re.compile(r"(fuck?|shit|ass|stupid|bitch|retard)", re.I),
+        re.compile(r".*(fuck|shit|stupid|bitch|retard).*", re.I),
         [
             "My mom said that you can't use bad words if you want to go to the heaven 🥺",
             "Mom, I'm scared 🥺"
@@ -62,7 +62,7 @@ patterns = [
             "Ouch! Make sure to rest and recover. If it hurts a lot, maybe see a doctor."
         ]
     ),
-    ( # Strength Training
+    ( # Strength
         re.compile(r"i(?:\s+am|(')?(?:m|ve))?\b.*\b(train|workout|exercise)(s|ing)?\b\s\bmy\s(streng(th|ht)|muscle)(s)?\b\s*", re.I),
         [
             "Wow, Ronnie Coleman must be so proud of you! Which body part did you just train?",
@@ -145,17 +145,18 @@ log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
 log_file = os.path.join(log_dir, "logs.txt")
 
-with open(log_file, "a", encoding="utf-8") as f:
-    while True:
-        try:
-            user = input("YOU: ").strip()
-            if not user:
-                print("Goodbye.")
+if __name__ == "__main__":
+    with open(log_file, "a", encoding="utf-8") as f:
+        while True:
+            try:
+                user = input("YOU: ").strip()
+                if not user:
+                    print("Goodbye.")
+                    break
+                bot_reply = reply(user)
+                print("fAfAfIfI:", bot_reply)
+                f.write(f"YOU: {user}\n")
+                f.write(f"fAfAfIfI: {bot_reply}\n")
+            except KeyboardInterrupt:
+                print("\nGoodbye.")
                 break
-            bot_reply = reply(user)
-            print("fAfAfIfI:", bot_reply)
-            f.write(f"YOU: {user}\n")
-            f.write(f"fAfAfIfI: {bot_reply}\n")
-        except KeyboardInterrupt:
-            print("\nGoodbye.")
-            break
