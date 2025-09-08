@@ -35,19 +35,6 @@ patterns = [
             "It's ok to not doing anything in a day, just take your time to recover and relax"
         ]
     ),
-    ( # Great
-        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(good|great|happy)\b", re.I),
-        [
-            "That's nice, hope that feelings stay with you for a long time"
-        ]
-    ),
-    ( # Tired
-        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(lazy|tired)\b", re.I),
-        [
-            "Remember, progress is made one step at a time. You got this!",
-            "Everyone feels tired sometimes. Just keep moving forward!"
-        ]
-    ),
     ( # Rest
         re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\brest(\s*day|ing)?\b", re.I),
         [
@@ -114,6 +101,19 @@ patterns = [
         [
             "How long do you run?",
             "Running is a great way to clear your mind."
+        ]
+    ),
+    ( # Great
+        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(good|great|happy)\b", re.I),
+        [
+            "That's nice, hope that feelings stay with you for a long time"
+        ]
+    ),
+    ( # Tired
+        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(lazy|tired)\b", re.I),
+        [
+            "Remember, progress is made one step at a time. You got this!",
+            "Everyone feels tired sometimes. Just keep moving forward!"
         ]
     ),
 ]
