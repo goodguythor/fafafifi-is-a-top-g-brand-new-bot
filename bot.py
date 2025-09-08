@@ -90,7 +90,7 @@ patterns = [
         ]
     ),
     ( # Marathon
-        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(r(u|a)n(s)?|walk(s)?|cycl(e(s)?|ing))\b.*\b(half|full)?\s*marathon\b", re.I),
+        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(r(u|a)n(s|ning)?|walk(s|ed)?|cycl(e(s)?|ing))\b.*\b(half|full)?\s*marathon\b", re.I),
         [
             "Wow, {X}??? You're an endurance monster.",
             "{X}? That's incredible! How did you feel during the race?"
