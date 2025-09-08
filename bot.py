@@ -5,11 +5,7 @@ import os
 # Pronoun Reflection
 reflections = {
     r"\bi(?:\s+am|(')?(?:m|ve))?\b": "you",
-    r"\bme\b": "you",
     r"\bmy\b": "your",
-    r"\byou\b": "i",
-    r"\byour\b": "my",
-    r"\byours\b": "mine",
 }
 
 def reflect(sentence):
