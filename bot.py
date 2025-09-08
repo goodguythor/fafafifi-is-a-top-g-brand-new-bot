@@ -57,7 +57,7 @@ patterns = [
         ]
     ),
     ( # Strength
-        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(train|workout|exercise)(s|ing)?\b\s\bmy\s(streng(th|ht)|muscle)(s)?\b\s*", re.I),
+        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(train(s|ing)?|work(ing\s)?out|exercise(s|ing)?)\b\s\bmy\s(streng(th|ht)|muscle)(s)?\b\s*", re.I),
         [
             "Wow, Ronnie Coleman must be so proud of you! Which body part did you just train?",
             "Strength training is the key to gains! What exercises did you do today?"
