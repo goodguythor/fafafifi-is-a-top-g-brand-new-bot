@@ -4,12 +4,19 @@ import os
 
 # Pronoun Reflection
 reflections = {
-    r"\bi(?:\s+am|(')?(?:m|ve))?\b": "you",
+    r"\bi(\s+am|(')?(?:m|ve))?\b": "you",
     r"\bmy\b": "your",
 }
 
 def reflect(sentence):
     words = sentence.split()
+    i = 0
+    while i < len(words) - 1:
+        if words[i].lower() == "i" and words[i + 1].lower() == "am":
+            words[i] = "i am"
+            del words[i + 1]
+        else:
+            i += 1
     reflected_words = []
     for word in words:
         reflected = word
@@ -76,7 +83,7 @@ patterns = [
         ]
     ),
     ( # Distance
-        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(r(u|a)n(s)?|walk(s)?|cycl(e(s)?|ing))\b.*\b(\d+(\.\d+)?)\s*(k(m|ilo(s|\s*meter)?)?|mile(s)?)\b", re.I),
+        re.compile(r".*\bi(\s+am|(')?(m|ve))?\b.*\b(r(u|a)n(s|ning)?|walk(s|ed)?|cycl(e(s)?|ing))\b.*\b(\d+(\.\d+)?)\s*(k(m|ilo(\s*meter)?)?|mile)(s)?\b", re.I),
         [
             "{X}? That's a great distance!",
             "Wow, {X}, at what pace do you run?"
