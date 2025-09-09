@@ -137,6 +137,13 @@ patterns = [
             "Everyone feels tired sometimes. Just keep moving forward!"
         ]
     ),
+    ( # Greeting
+        re.compile(r"(h(i|e(llo|y|i)|a(llo|y|i))|a(y|llo)|yo)", re.I),
+        [
+            "Haiii",
+            "Yooo, how are you today?"
+        ]
+    ),
 ]
 
 # Bot Default Response
