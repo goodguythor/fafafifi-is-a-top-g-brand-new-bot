@@ -1,4 +1,60 @@
 # fAfAfIfI Is a Top G Brand New Bot
-Really cool bot
+This is a regex based chatbot with pronouns reflections.
+## Background
+I enjoy working out, whether it’s strength training or cardiovascular exercise, and that passion inspired me to build this chatbot. The main purpose of the chatbot is to provide feedback on workouts, track progress, and help monitor injuries. By combining simple rules with structured responses, the chatbot will serve as a workout companion—helping me stay consistent, safe, and motivated in my fitness journey.
 ## How to Setup and Run
+### Clone Repository
+Clone this repo to your local device with whatever technique you like and open the project
+### Create Virtual Environment 
+Create virtual environment for this project to avoid dependencies hell with existing project in your device, you can use whatever library you like.
+### Migrate to Virtual Environment
+Don't forget to migrate to your virtual environment everytime you open this project!!!!!!
+### Install Dependencies
+Install the required dependencies with this command.
+```bash
+pip install -r requirements.txt
+```
+### Run the Bot
+#### CLI Mode
+To run the bot in CLI Mode, you just need to run the bot.py file with this command.
+```bash
+python bot.py
+```
+#### Discord Mode
+To run the bot in Discord Mode, you need to do a few steps.
+##### Create Discord Application
+Create your own discord application first, you can create your application here https://discord.com/developers/applications (Don't forget to copy the app token because we gonna use that to connect your bot to the core bot)
+##### Setup Discord Application
+Basically, you just need to activate the privileged gateway intents on the bot sections to setup.
+![alt text](screenshots/intents.png)
+##### Save Token in Environtment Variable
+Save your discord app token in your env variable (Make your the env variable name is DISCORD_BOT_TOKEN, if you change the name then you should also change the variable name in discord_bot.py with your own env variable name).
+Windows example:
+```bash
+$env:DISCORD_BOT_TOKEN = "Your Token Goes Here"
+```
+Linux example:
+```bash
+export DISCORD_BOT_TOKEN="Your Token Goes Here"
+```
+##### Invite Bot to Server
+Go to OAuth2 page on your application and check `bot` on scope and add at least `Send Messages` permission for your bot, then you pick `Guild Install` as the integration type and copy the generated url then click to invite your bot the desired server.
+##### Run Bot
+Once your bot arrived at the server, you just need to run the discord_bot.py with this command:
+```bash
+python discord_bot.py
+```
 ## Demo
+This bot could only catch first person pattern like `I just workout today` and not `He just workout today` 
+### CLI Mode
+To test the bot, you just need to type anything in the terminal after you run the file. To exit, you just need to press `CTRL + C`. All the chat logs on CLI mode will be written in the file called `logs.txt` that is located on the `\logs` folder.
+
+![alt text](screenshots/cli.png)
+### Discord Mode
+After you run the file, this will be shown in your terminal
+
+![alt text](screenshots/discord_cli.png)
+
+To test the bot, you just need to send message in your server like this:
+
+![alt text](screenshots/discord.png)
