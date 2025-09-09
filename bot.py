@@ -110,6 +110,20 @@ patterns = [
             "Running is a great way to clear your mind."
         ]
     ),
+    ( # Simple Cycling
+        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(cycl(e(s|d)?|ing))\b", re.I),
+        [
+            "How long do you cycle?",
+            "Cycling is fun."
+        ]
+    ),
+    ( # Simple Walk
+        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(walk(s|ed|ing)?)\b", re.I),
+        [
+            "How long do you walk?",
+            "Walking is a great way to refresh your mind."
+        ]
+    ),
     ( # Great
         re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(good|great|happy)\b", re.I),
         [
