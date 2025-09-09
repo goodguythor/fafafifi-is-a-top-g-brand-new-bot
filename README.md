@@ -21,14 +21,17 @@ To run the bot in CLI Mode, you just need to run the bot.py file with this comma
 python bot.py
 ```
 #### Discord Mode
-To run the bot in Discord Mode, you need to do a few steps.
+To run the bot in Discord Mode, you need to do a few steps, or you can simply use the [fafafifi bot invitation](https://discord.com/oauth2/authorize?client_id=1413929581139857470&permissions=67584&integration_type=0&scope=bot) to invite the bot I've already made to your server and skip to [this](#save-token-in-environtment-variable) steps below.
 ##### Create Discord Application
 Create your own discord application first, you can create your application here https://discord.com/developers/applications (Don't forget to copy the app token because we gonna use that to connect your bot to the core bot)
 ##### Setup Discord Application
 Basically, you just need to activate the privileged gateway intents on the bot sections to setup.
 ![alt text](screenshots/intents.png)
+##### Invite Bot to Server
+Go to OAuth2 page on your application and check `bot` on scope and add at least `Send Messages` permission for your bot, then you pick `Guild Install` as the integration type and copy the generated url then click to invite your bot the desired server.
 ##### Save Token in Environtment Variable
 Save your discord app token in your env variable (Make your the env variable name is DISCORD_BOT_TOKEN, if you change the name then you should also change the variable name in discord_bot.py with your own env variable name).
+
 Windows example:
 ```bash
 $env:DISCORD_BOT_TOKEN = "Your Token Goes Here"
@@ -37,8 +40,6 @@ Linux example:
 ```bash
 export DISCORD_BOT_TOKEN="Your Token Goes Here"
 ```
-##### Invite Bot to Server
-Go to OAuth2 page on your application and check `bot` on scope and add at least `Send Messages` permission for your bot, then you pick `Guild Install` as the integration type and copy the generated url then click to invite your bot the desired server.
 ##### Run Bot
 Once your bot arrived at the server, you just need to run the discord_bot.py with this command:
 ```bash
