@@ -21,7 +21,7 @@ To run the bot in CLI Mode, you just need to run the bot.py file with this comma
 python bot.py
 ```
 #### Discord Mode
-To run the bot in Discord Mode, you need to do a few steps, or you can simply use the [fafafifi bot invitation](https://discord.com/oauth2/authorize?client_id=1413929581139857470&permissions=67584&integration_type=0&scope=bot) to invite the bot I've already made to your server and skip to [this](#save-token-in-environtment-variable) steps below.
+To run the bot in Discord Mode, you need to do a few steps, or you can simply use the [fafafifi bot invitation](https://discord.com/oauth2/authorize?client_id=1413929581139857470&permissions=67584&integration_type=0&scope=bot) to invite the bot I've already made to your server and skip all the steps (Remember that my bot will only work whenever I run my discord_bot.py file locally so proceed with caution).
 ##### Create Discord Application
 Create your own discord application first, you can create your application here https://discord.com/developers/applications (Don't forget to copy the app token because we gonna use that to connect your bot to the core bot)
 ##### Setup Discord Application
