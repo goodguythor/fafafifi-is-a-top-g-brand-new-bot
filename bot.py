@@ -89,21 +89,28 @@ patterns = [
         ]
     ),
     ( # Distance
-        re.compile(r".*\bi(\s+am|(')?(m|ve))?\b.*\b(r(u|a)n(s|ning)?|walk(s|ed)?|cycl(e(s)?|ing))\b.*\b(\d+(\.\d+)?)\s*(k(m|ilo(\s*meter)?)?|mile)(s)?\b", re.I),
+        re.compile(r".*\bi(\s+am|(')?(m|ve))?\b.*\b(r(u|a)n(s|ning)?|walk(s|ed|ing)?|cycl(e(s|d)?|ing))\b.*\b(\d+(\.\d+)?)\s*(k(m|ilo(\s*meter)?)?|mile)(s)?\b", re.I),
         [
             "{X}? That's a great distance!",
             "Wow, {X}, at what pace do you run?"
         ]
     ),
+    ( # Duration
+        re.compile(r".*\bi(\s+am|(')?(m|ve))?\b.*\b(r(u|a)n(s|ning)?|walk(s|ed|ing)?|cycl(e(s|d)?|ing))\b.*\b(\d+(\.\d+)?)\s*(m(inute)?|h(our)?)(s)?\b", re.I),
+        [
+            "{X}? That's a great time!",
+            "Wow, {X}, at what pace do you run?"
+        ]
+    ),
     ( # Marathon
-        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(r(u|a)n(s|ning)?|walk(s|ed)?|cycl(e(s)?|ing))\b.*\b(half|full)?\s*marathon\b", re.I),
+        re.compile(r".*\bi(?:\s+am|(')?(?:m|ve))?\b.*\b(r(u|a)n(s|ning)?|walk(s|ed|ing)?|cycl(e(s|d)?|ing))\b.*\b(half|full)?\s*marathon\b", re.I),
         [
             "Wow, {X}??? You're an endurance monster.",
             "{X}? That's incredible! How did you feel during the race?"
         ]
     ),
     ( # Pace
-        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(r(u|a)n(s|ning)?|walk(s|ed)?|cycl(e(s)?|ing))\b.*\bpace(s)?\b.*\b(\d+(\.\d+)?)\b", re.I),
+        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(r(u|a)n(s|ning)?|walk(s|ed|ing)?|cycl(e(s|d)?|ing))\b.*\bpace(s)?\b.*\b(\d+(\.\d+)?)\b", re.I),
         [
             "That's a great pace, keep up the good work!!!",
             "Wow, you could've been an athlete if you keep doing this consistently."
