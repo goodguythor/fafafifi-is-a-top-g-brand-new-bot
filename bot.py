@@ -35,8 +35,14 @@ patterns = [
             "My mom said that you can't use bad words if you want to go to the heaven 🥺",
             "Mom, I'm scared 🥺"
         ]
+    ),
+    ( # Negation + Negative
+        re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(not|don(')?t|do not|didn(')?t|did not|ain(')?t)\b.*\b(bad|lazy|tired|hurt(ing|s)?|injur(y|ed|ies))\b", re.I),
+        [
+            "That's nice, keep going and you will see the result!!!"
+        ]
     ), 
-    ( # Negation 
+    ( # Negation + Positive
         re.compile(r".*\b(i(?:\s+am|(')?(?:m|ve))?|my)\b.*\b(not|don(')?t|do not|didn(')?t|did not|ain(')?t)\b", re.I),
         [
             "It's ok to not doing anything in a day, just take your time to recover and relax"
