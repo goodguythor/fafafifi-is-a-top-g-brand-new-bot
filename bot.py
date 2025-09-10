@@ -144,6 +144,13 @@ patterns = [
             "Yooo, how are you today?"
         ]
     ),
+    ( # Gratitude
+        re.compile(r"t(hank(s|\syou)|y)", re.I),
+        [
+            "You're welcome",
+            "My pleasure"
+        ]
+    ),
 ]
 
 # Bot Default Response
